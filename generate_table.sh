@@ -14,7 +14,6 @@ for Sys in He2_+ H3 Li Be B C
     E_Referenz=`grep "FCI STATE  1.1 Energy " $sourcefolder/output | tail -n 1  | awk '{print $NF}'`
     Major=`grep $name ~/DMs/FCI/$Sys/Table | awk '{print $2}'`
     Minor=`grep $name ~/DMs/FCI/$Sys/Table | awk '{print $3}'`
-    echo $sourcefolder $Minor
     if [[ "$Minor" == "" ]]; then
       Minor=0d0
     fi
@@ -25,9 +24,23 @@ for Sys in He2_+ H3 Li Be B C
       for OEP_Basis in  "cc-PVDZ"
       do
 	sub_name=OEP_"$OEP_Basis"_thr_"$thr"
-	Alpha_Eigenvalue=`grep Deviation "$Element"/"$name"/"$sub_name"/output | grep alpha | awk -v major=$Major '{print $(NF-1), $NF, $NF/major*100 }'`
-	Beta_Eigenvalue=`grep Deviation "$Element"/"$name"/"$sub_name"/output | grep beta | awk -v minor=$Minor '{print $(NF-1), $NF, $NF/minor*100 }'`
-	echo $AO_Basis $Element $Charge  $Unpaired $OEP_Basis $thr $Alpha_Eigenvalue $Beta_Eigenvalue
+	n_channels=`grep "HOMO" "$Element"/"$name"/"$sub_name"/output  | tail -n 1 | awk '{print NF}'`
+        Alpha_Eigenvalue=""
+        Alpha_E_EH="" 
+        Beta_Eigenvalue=""
+        Beta_E_EH=""
+	if (($n_channels  == 3 && $Unpaired >  0)) ; then
+	  Alpha_Eigenvalue=`grep Deviation "$Element"/"$name"/"$sub_name"/output | grep alpha | awk -v major=$Major '{print $(NF-1), $NF, $NF/major*100 }'`
+	  Alpha_E_EH=`grep "E_H" "$Element"/"$name"/"$sub_name"/output | awk '{print $3}'`
+	  Beta_Eigenvalue=`grep Deviation "$Element"/"$name"/"$sub_name"/output | grep beta | awk -v minor=$Minor '{print $(NF-1), $NF, $NF/minor*100 }'`
+	  Beta_E_EH=`grep "E_H" "$Element"/"$name"/"$sub_name"/output | awk '{print $4}'`
+	  echo alpha $AO_Basis $Element $Charge  $Unpaired $OEP_Basis $thr $Alpha_Eigenvalue $Alpha_E_EH
+	  echo beta  $AO_Basis $Element $Charge  $Unpaired $OEP_Basis $thr $Beta_Eigenvalue $Beta_E_EH
+  	elif (( $n_channels == 2 )); then
+	  Alpha_Eigenvalue=`grep Deviation "$Element"/"$name"/"$sub_name"/output | grep alpha | awk -v major=$Major '{print $(NF-1), $NF, $NF/major*100 }'`
+	  Alpha_E_EH=`grep "E_H" "$Element"/"$name"/"$sub_name"/output | awk '{print $3}'`
+	  echo alpha $AO_Basis $Element $Charge  $Unpaired $OEP_Basis $thr $Alpha_Eigenvalue $Alpha_E_EH
+        fi
       done
     done
   done
