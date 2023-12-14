@@ -1,0 +1,21 @@
+basis={
+default,AO_BASISDUMMY
+set,oep;default,OEP_BASISDUMMY/mp2fit
+}
+
+symmetry,nosym
+
+angstrom
+include, /home/quantura/DMs/FCI/SYS_DUMMY/struc.xyz
+
+
+charge=CHARGEDUMMY
+spin=SPINDUMMY
+
+hf,maxit=0
+
+{matrop; import,3000.2,file=dm.dat}
+{KS,PBE}
+e_ref_fci=REFERENCEDUMMY
+
+acfd;uksinv,refden=3000.2,orb=2100.2,e_ref=e_ref_fci,thr_fai_oep=THR_DUMMY,epsilon_major=MAJOR_DUMMY,epsilon_minor=MINOR_DUMMY,TEST_DENSITY=1,STAGE=1
