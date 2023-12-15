@@ -17,6 +17,7 @@ do
 	place=`echo $i | sed "s/\/input//g"`
 	cd $place
        	pwd
-	$MOLPRO -t $NUM_OMP_THREADS -m $MEM --no-xml-output < input > output 
+	$MOLPRO -t $NUM_OMP_THREADS -m $MEM --no-xml-output < input_1 > output_1
+	$MOLPRO -t $NUM_OMP_THREADS -m $MEM --no-xml-output < input_2 > output_2
 	cd -
 done
