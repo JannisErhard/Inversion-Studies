@@ -1,8 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
-record=np.dtype([('spin', str, 20), ('ao-basis', str, 20),('System', str, 20), ('charge', int), ('unpaired', int), ('oep-basis', str, 20), ('thr_int_fai', np.float32),  ('Eigval', np.float32), ('eig_H_error', np.float32), ('eig_percent_error', np.float32), ('Hatree_Error', np.float32), ('Density_Error', np.float32)])
+
+# data type for laodtext, with this declaration np.loadtext can read any kind of table, otherwise it requires one datatype for all cells
+record=np.dtype([('spin', str, 20), ('ao-basis', str, 20),('System', str, 20), ('charge', int), ('unpaired', int), ('oep-basis', str, 20), ('thr_int_fai', np.float32),  ('Eigval', np.float32), ('eig_H_error', np.float32), ('eig_percent_error', np.float32), ('Hatree_Error', np.float32), ('Density_Error', np.float32), ('t_tilde_error', np.float32)])
 table = np.loadtxt('table', dtype=record)
 
+# adapt other color map to allow for identificatio of many lines in one plot
 colormap = plt.cm.gist_ncar
 
 
@@ -11,16 +14,10 @@ for line in table:
     thresholds.append(line[6])
     systems.append(line[2]+"_C:"+str(line[3])+"_S:"+str(line[4])+"_"+line[0])
 
-print(np.sort(np.unique(thresholds))[::-1])
-
-Eigval_Hartree_errors  = {}
-Eigval_errors  = {}
-Hartree_errors = {}
-Density_errors = {}
-Individual_errors = {}
-
 thresholds = np.sort(np.unique(thresholds))[::-1]
 systems = np.sort(np.unique(systems))[::-1]
+
+Eigval_Hartree_errors, Eigval_errors, Hartree_errors, Density_errors, RHS_errors, Individual_errors  = {}, {}, {}, {}, {}, {}
 
 for system in systems:
     Individual_errors[system] = {}
@@ -28,7 +25,7 @@ for system in systems:
     Individual_errors[system]['threshold'] = []
 
 for threshold in thresholds:
-    Eigval_errors[threshold], Hartree_errors[threshold], Density_errors[threshold], Eigval_Hartree_errors[threshold]  = [], [], [], []
+    Eigval_errors[threshold], Hartree_errors[threshold], Density_errors[threshold], Eigval_Hartree_errors[threshold], RHS_errors[threshold]  = [], [], [], [], []
 
 print(systems)
 
@@ -37,12 +34,34 @@ for line in table:
     Eigval_errors[line[6]].append(line[9])
     Hartree_errors[line[6]].append(line[10])
     Density_errors[line[6]].append(line[11])
+    RHS_errors[line[6]].append(line[12])
 
 
 if False:
-    for threshold in thresholds[::3]:
-        plt.hist(Eigval_errors[np.float32(threshold)], bins=30, alpha = 0.5, label=str(threshold))  # density=False would make counts
-    plt.legend(loc="upper left")
+    #fig = plt.figure()
+    #ax = fig.add_subplot(1, 1, 1)
+    for threshold in thresholds[::4]:
+        fig = plt.figure()
+        ax = fig.add_subplot(1, 1, 1)
+        plt.hist(RHS_errors[np.float32(threshold)], bins=np.logspace(-8,2,20), alpha = 0.5, label=str(threshold))  # density=False would make counts
+        ax.set_xscale('log')
+        plt.legend(loc="upper left")
+    #ax.set_xscale('log')
+    #plt.legend(loc="upper left")
+    plt.show()
+
+if True:
+    #fig = plt.figure()
+    #ax = fig.add_subplot(1, 1, 1)
+    for threshold in thresholds[::2]:
+        fig = plt.figure()
+        ax = fig.add_subplot(1, 1, 1)
+        ax.set_ylim([0, 15])
+        plt.hist(Eigval_Hartree_errors[np.float32(threshold)], bins=np.logspace(-4,0,20), alpha = 0.5, label=str(threshold), edgecolor='black',)  # density=False would make counts
+        ax.set_xscale('log')
+        plt.legend(loc="upper left")
+    #ax.set_xscale('log')
+    #plt.legend(loc="upper left")
     plt.show()
 
 if False:
@@ -76,9 +95,10 @@ if False:
   ax.set_xscale('log')
 
 
-if True:
+if False:
+# 4 figures with individual line charts showing one of five possible error metrics for all 56 systems over all thresholds
   for line in table:
-      Individual_errors[line[2]+"_C:"+str(line[3])+"_S:"+str(line[4])+"_"+line[0]]['Error'].append(line[11]) # 8 -> eig [H], 9 -> eig [%], 10 -> E_H [H], 11 \rho [e⁻]
+      Individual_errors[line[2]+"_C:"+str(line[3])+"_S:"+str(line[4])+"_"+line[0]]['Error'].append(line[12]) # 8 -> eig [H], 9 -> eig [%], 10 -> E_H [H], 11 \rho [e⁻], 12 t~
       Individual_errors[line[2]+"_C:"+str(line[3])+"_S:"+str(line[4])+"_"+line[0]]['threshold'].append(line[6])
   
   ls = ['-', '--', '-.']
@@ -99,7 +119,7 @@ if True:
     ax.set_xscale('log')
 
 
-print(Individual_errors)
+#print(Individual_errors)
 
 plt.show()
 

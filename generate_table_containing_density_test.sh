@@ -38,14 +38,14 @@ for Sys in He2_+ H3 Li Be B C
 	  Alpha_t_II=`grep "t_rhs_II_alpha" "$Element"/"$name"/"$sub_name"/output_2 | awk '{print $2}'`
 	  Beta_t_II=`grep "t_rhs_II_beta" "$Element"/"$name"/"$sub_name"/output_2 | awk '{print $2}'`
 	  Beta_Density_Error=` grep beta-Density-Test "$Element"/"$name"/"$sub_name"/output_2 | awk '{print $2}'`
-	  echo alpha $AO_Basis $Element $Charge  $Unpaired $OEP_Basis $thr $Alpha_Eigenvalue $Alpha_E_EH $Alpha_Density_Error $Alpha_t_II
-	  echo beta  $AO_Basis $Element $Charge  $Unpaired $OEP_Basis $thr $Beta_Eigenvalue  $Beta_E_EH  $Beta_Density_Error  $Beta_t_II
+	  echo alpha $AO_Basis $Element $Charge  $Unpaired $OEP_Basis $thr $Alpha_Eigenvalue $Alpha_E_EH $Alpha_Density_Error $Alpha_t_II | awk 'NF==13{print $0}'
+	  echo beta  $AO_Basis $Element $Charge  $Unpaired $OEP_Basis $thr $Beta_Eigenvalue  $Beta_E_EH  $Beta_Density_Error  $Beta_t_II | awk 'NF==13{print $0}'
   	elif (( $n_channels == 2 )); then
 	  Alpha_Eigenvalue=`grep Deviation "$Element"/"$name"/"$sub_name"/output_2 | grep alpha | awk -v major=$Major '{print $(NF-1), $NF, $NF/major*100 }'`
 	  Alpha_E_EH=`grep "E_H" "$Element"/"$name"/"$sub_name"/output_2 | awk '{print $3}'`
 	  Alpha_Density_Error=` grep alpha-Density-Test "$Element"/"$name"/"$sub_name"/output_2 | awk '{print $2}'`
 	  Alpha_t_II=`grep "t_rhs_II_alpha" "$Element"/"$name"/"$sub_name"/output_2 | awk '{print $2}'`
-	  echo alpha $AO_Basis $Element $Charge  $Unpaired $OEP_Basis $thr $Alpha_Eigenvalue $Alpha_E_EH $Alpha_Density_Error $Alpha_t_II
+	  echo alpha $AO_Basis $Element $Charge  $Unpaired $OEP_Basis $thr $Alpha_Eigenvalue $Alpha_E_EH $Alpha_Density_Error $Alpha_t_II | awk 'NF==13{print $0}'
         fi
       done
     done
