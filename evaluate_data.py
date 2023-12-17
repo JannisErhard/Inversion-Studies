@@ -45,7 +45,7 @@ if False:
     plt.legend(loc="upper left")
     plt.show()
 
-if True:
+if False:
   Mean_Eigval_Hartree_errors  = [] 
   Mean_Eigval_errors  = [] 
   Max_Eigval_errors  = [] 
@@ -76,9 +76,9 @@ if True:
   ax.set_xscale('log')
 
 
-if False:
+if True:
   for line in table:
-      Individual_errors[line[2]+"_C:"+str(line[3])+"_S:"+str(line[4])+"_"+line[0]]['Error'].append(line[8])
+      Individual_errors[line[2]+"_C:"+str(line[3])+"_S:"+str(line[4])+"_"+line[0]]['Error'].append(line[11]) # 8 -> eig [H], 9 -> eig [%], 10 -> E_H [H], 11 \rho [e⁻]
       Individual_errors[line[2]+"_C:"+str(line[3])+"_S:"+str(line[4])+"_"+line[0]]['threshold'].append(line[6])
   
   ls = ['-', '--', '-.']
@@ -99,7 +99,7 @@ if False:
     ax.set_xscale('log')
 
 
-
+print(Individual_errors)
 
 plt.show()
 
