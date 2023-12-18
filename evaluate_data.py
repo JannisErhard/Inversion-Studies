@@ -38,21 +38,17 @@ for line in table:
 
 
 if False:
-    #fig = plt.figure()
-    #ax = fig.add_subplot(1, 1, 1)
+    #4 spearate images, Eigval Errors in Percent
     for threshold in thresholds[::4]:
         fig = plt.figure()
         ax = fig.add_subplot(1, 1, 1)
         plt.hist(RHS_errors[np.float32(threshold)], bins=np.logspace(-8,2,20), alpha = 0.5, label=str(threshold))  # density=False would make counts
         ax.set_xscale('log')
         plt.legend(loc="upper left")
-    #ax.set_xscale('log')
-    #plt.legend(loc="upper left")
     plt.show()
 
-if True:
-    #fig = plt.figure()
-    #ax = fig.add_subplot(1, 1, 1)
+if False:
+    #4 seperate images, Eigval Error Histograms in Hartree 
     for threshold in thresholds[::2]:
         fig = plt.figure()
         ax = fig.add_subplot(1, 1, 1)
@@ -60,11 +56,10 @@ if True:
         plt.hist(Eigval_Hartree_errors[np.float32(threshold)], bins=np.logspace(-4,0,20), alpha = 0.5, label=str(threshold), edgecolor='black',)  # density=False would make counts
         ax.set_xscale('log')
         plt.legend(loc="upper left")
-    #ax.set_xscale('log')
-    #plt.legend(loc="upper left")
     plt.show()
 
 if False:
+  # Mean Errors of available Types 
   Mean_Eigval_Hartree_errors  = [] 
   Mean_Eigval_errors  = [] 
   Max_Eigval_errors  = [] 
@@ -106,7 +101,7 @@ if False:
   
   print(len(systems))
   for i in range(0,4):
-    fig = plt.figure()
+    fig = plt.figure(figsize=(16,8))
     ax = fig.add_subplot(1,1,1)
     plt.gca().set_prop_cycle(plt.cycler('color', plt.cm.jet(np.linspace(0, 1, 14))))
     for system in systems[i*14:(i+1)*14]:
