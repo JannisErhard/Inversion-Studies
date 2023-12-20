@@ -12,12 +12,16 @@ echo Memory: $MEM m
 
 export OMP_THREAD_LIMIT=$NUM_OMP_THREADS
 
-for i in `find -iname input`;
+for i in `find -iname input_2`;
 do 
-	place=`echo $i | sed "s/\/input//g"`
+	place=`echo $i | sed "s/\/input_2//g"`
 	cd $place
        	pwd
+	if [ ! -f output_2 ]
+       	then
+	       echo "yuck" 	
 	$MOLPRO -t $NUM_OMP_THREADS -m $MEM --no-xml-output < input_1 > output_1
 	$MOLPRO -t $NUM_OMP_THREADS -m $MEM --no-xml-output < input_2 > output_2
+	fi
 	cd -
 done

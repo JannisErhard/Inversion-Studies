@@ -24,7 +24,7 @@ for Sys in He2_+ H3 Li Be B C
     do
       #for OEP_Basis in  "aug-cc-pVDZ" "aug-cc-pwCVDZ" "aug-cc-pVTZ" "aug-cc-pwCVTZ" "aug-cc-pVQZ"
       #for OEP_Basis in  "cc-pVDZ" "cc-pwCVDZ" "cc-pVTZ" "cc-pwCVTZ" "cc-pVQZ"
-      for OEP_Basis in  "cc-PVDZ"
+      for OEP_Basis in  "cc-PVTZ"
       do
           #echo  $Element $Charge $Unpaired $AO_Basis $OEP_Basis $thr $E_Referenz
           sub_name=OEP_"$OEP_Basis"_thr_"$thr"
