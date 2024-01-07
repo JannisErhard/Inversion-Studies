@@ -18,4 +18,4 @@ hf,maxit=0
 
 e_ref_fci=REFERENCEDUMMY
 
-acfd;uksinv,refden=3000.2,orb=2100.2,e_ref=e_ref_fci,thr_fai_oep=THR_DUMMY,epsilon_major=MAJOR_DUMMY,epsilon_minor=MINOR_DUMMY
+acfd;uksinv,refden=3000.2,orb=2100.2,e_ref=e_ref_fci,thr_fai_oep=THR_DUMMY,epsilon_major=MAJOR_DUMMY,epsilon_minor=MINOR_DUMMY,DENSITY_TEST=1

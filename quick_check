@@ -1,0 +1,28 @@
+#!/bin/bash
+for i in `find -iname output | grep -v sym | grep aug`
+do echo $i
+        grep Density $i
+	grep -i converged $i
+	grep -i deviation $i | awk '{print $0, $NF/$(NF-1)}'
+done
+
+#for i in `find -iname output | grep sym_0 | grep aug`
+#do echo $i
+#       	grep -i converged $i
+#	grep Density $i
+#	grep -i deviation $i | awk '{print $0, $NF/$(NF-1)}'
+#done
+#for i in `find -iname output | grep sym_1 | grep aug`
+#do echo $i
+#       	grep -i converged $i
+#	grep Density $i
+#	grep -i deviation $i | awk '{print $0, $NF/$(NF-1)}'
+#done
+#
+#for i in `find -iname output | grep sym_1 | grep aug`
+#do 
+#	sys=`echo $i | sed "s!\/!\ !g" |awk '{print $2}'`
+#       	noa=`grep -i "noa:" $i | awk '{print $NF}'`
+#       	nob=`grep -i "nob:" $i | awk '{print $NF}'`
+#	echo $sys ,noa=$noa,nob=$nob
+#done

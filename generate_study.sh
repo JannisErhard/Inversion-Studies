@@ -2,8 +2,8 @@
 
 for Sys in He2_+ H3 Li Be B C 
   do
-  #sourcefolders=`ls -d --color=never ~/DMs/FCI/$Sys/*_aug-cc-pwCV?Z`
-  sourcefolders=`ls -d --color=never ~/DMs/FCI/$Sys/*_aug-cc-pwCVTZ`
+  sourcefolders=`ls -d --color=never ~/DMs/FCI/$Sys/*_aug-cc-pwCV?Z`
+  #sourcefolders=`ls -d --color=never ~/DMs/FCI/$Sys/*_aug-cc-pwCVTZ`
   for sourcefolder in $sourcefolders
     do 
     name=`echo $sourcefolder | sed "s/\//\ /g" | awk '{print $NF}'`
@@ -22,9 +22,9 @@ for Sys in He2_+ H3 Li Be B C
     mkdir "$Element"/"$name"
     for thr in 5d-2 1d-2 8d-3 6d-3 4d-3 2d-3 1d-3 8d-4 5d-4 1d-4 5d-5 1d-5 5d-6 1d-6 
     do
-      #for OEP_Basis in  "aug-cc-pVDZ" "aug-cc-pwCVDZ" "aug-cc-pVTZ" "aug-cc-pwCVTZ" "aug-cc-pVQZ"
+      for OEP_Basis in  "aug-cc-pVDZ" "aug-cc-pwCVDZ" "aug-cc-pVTZ" "aug-cc-pwCVTZ" "aug-cc-pVQZ"
       #for OEP_Basis in  "cc-pVDZ" "cc-pwCVDZ" "cc-pVTZ" "cc-pwCVTZ" "cc-pVQZ"
-      for OEP_Basis in  "cc-PVDZ"
+      #for OEP_Basis in  "cc-PVDZ"
       do
           #echo  $Element $Charge $Unpaired $AO_Basis $OEP_Basis $thr $E_Referenz
           sub_name=OEP_"$OEP_Basis"_thr_"$thr"

@@ -1,6 +1,6 @@
 #!/bin/bash
 n=0
-for i in `find -iname output`
+for i in `find -iname output_2`
 do 
 	string=`grep NOT $i`
 	if [[ ! -z $string ]]; then
